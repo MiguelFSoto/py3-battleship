@@ -202,8 +202,7 @@ def checkWin(player1, player2):
                 # Si lo hacen, los actualiza
                 obj[player1.name]["wins"] += 1
                 # Revisa si los disparos de esta partida eran menores que los anteriores
-                # Para esto se usa la funcion min
-                if player1.firedShots > obj[player1.name]["minShots"]:
+                if player1.firedShots < obj[player1.name]["minShots"]:
                     obj[player1.name]["minShots"] = player1.firedShots
             else:
                 # Si no, los crea con los datos de la partida
@@ -377,13 +376,6 @@ def saveJson(player):
     f.write(json.dumps(player.locations, indent = 4))
 
 '''
-Funcion para manejar el evento de ubicar, se usara en un boton de la interfaz
-Parametros:
-    player1: representa el primer jugador de la partida (el jugador local)
-    player2: representa el segundo jugador de la partida
-'''
-
-'''
 Funcion para cambiar la direccion en la que se ponen los barcos en la fase de ubicar
 '''
 def changeDir():
@@ -473,6 +465,9 @@ def windowInit():
 Funcion para actualizar la pantalla cuando inicie la partida
 '''
 def gameInit():
+    # Reinicia los jugadores
+    restartGame(player, machine)
+
     # Elimina de la pantalla todos los componenetes que habia al inicio
     clearWindow()
 
@@ -543,6 +538,7 @@ def gameInit():
         for y in range(10):
             player.oceanLabels[x][y].configure(command = partial(placeEventButtons, player, 
             machine, x, y))
+            player.targetLabels[x][y].configure(command = nothing)
 
 '''
 Funcion para cargar las estadisticas del juego
