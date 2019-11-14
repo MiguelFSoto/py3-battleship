@@ -1,3 +1,7 @@
+# Python 3 and Tkinter Battleship imitation
+# Made by Miguel Soto
+# Finished 14/11/2019
+
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
