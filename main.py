@@ -247,6 +247,7 @@ def fireEventButtons(player1, player2, x, y):
         # Revisa si el jugador player1 gano la partida
         if checkWin(player1, player2):
             messagebox.showinfo("Resultados", "El ganador es " + player1.name + "!")
+            # Luego de cerrar el mensaje, vuelve al menu de inicio
             restartGame(player1, player2)
 
         # Recibe las coordenadas para el jugador player2
@@ -263,6 +264,7 @@ def fireEventButtons(player1, player2, x, y):
         # Revisa si el jugador player2 gano la partida
         if checkWin(player2, player1):
             messagebox.showinfo("Resultados", "El ganador es " + player2.name + "!")
+            # Luego de cerrar el mensaje, vuelve al menu de inicio
             restartGame(player1, player2)
     else:
         # Si las coordenadas son incorrectas, muestra un mensaje de rror
@@ -519,9 +521,6 @@ def gameInit():
     targetLabel9.place(x = 340, y = 274)
     targetLabel10.place(x = 337, y = 304)
 
-    # actionButton.place(x = 660, y = 120)
-    # actionButton.configure(command=partial(placeEvent, player, machine))
-
     shotsLabel.place(x = 670, y = 150)
 
     jsonLoadButton.place(x = 0, y = 330)
@@ -545,15 +544,19 @@ Funcion para cargar las estadisticas del juego
 Salida: un diccionario que contiene las estadisticas
 '''
 def loadStats():
+    # Lee los datos del archivo
     data = None
     with open("data.json", "r") as f:
         data = f.read()
     
+    # Intenta cargar los datos como un diccionario
     try:
         obj = json.loads(data)
     except:
+        # Si hay un error, deja el diccionario vacio
         obj = {}
-    #print(obj)
+
+    # Devuelve los datos
     return obj
 
 '''
@@ -622,6 +625,7 @@ def hideStats():
     for label in rankingLabels:
         label.place_forget()
 
+    # Cargala pantalla de inicio
     windowInit()
 
 '''
@@ -717,6 +721,7 @@ def restartGame(player1, player2):
     player1 = restartPlayer(player1)
     player2 = restartPlayer(player2)
 
+    # Carga la pantalla de incio
     windowInit()
 
 '''
@@ -820,7 +825,7 @@ machine = Player(generateGrid(), generateGrid(), generateButtonGrid(),
                 generateButtonGrid(), "Maquina", True)
 
 # Boton para cambiar la direccion en la que se ponen los barcos
-changeDirButton = Button(window, text="Direccion: Horizontal", command=changeDir)
+changeDirButton = Button(window, text = "Direccion: Horizontal", command = changeDir)
 
 # Label que se usara para mostrar la informacion sobre los disparos
 shotsLabel = Label(window, text="")
@@ -856,9 +861,11 @@ backButton = Button(window, text = "Regresar", command = hideStats)
 jsonLoadButton = Button(window, text = "Cargar ubicaciones", 
                         command = partial(placeJson, player, machine))
 
+# Componentes para mostrar el ranking
 rankingMessage = Label(window, text = "Top 5")
 rankingLabels = [Label(window), Label(window), Label(window), Label(window), Label(window)]
 
+# Muestra la pantalla de inicio
 windowInit()
 
 window.mainloop()

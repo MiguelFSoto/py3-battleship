@@ -142,8 +142,9 @@ class Player():
             if (currentTile in shipTiles):
                 return False
         
-        if self.isMachine:
-            print(coordsToChange)
+        # if self.isMachine:
+        #     print(coordsToChange)
+
         # Si llego aqui, las ubicaciones son correctas
         # Actualiza el tablero de los barcos del jugador usando el tipo y devuelve True
         for coord in coordsToChange:
